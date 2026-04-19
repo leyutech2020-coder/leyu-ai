@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="LeYu AI - 由 AI 驅動，為未來而生">
+	<title>LeYu AI</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+	<style>
+		*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+		:root{
+			--primary:#4f8cff;--secondary:#7c3aed;--accent:#00e6b4;
+			--bg:#0a0f1e;--card:#111827;--text:#e2e8f0;
+			--radius:16px;--shadow:0 20px 60px rgba(0,0,0,0.4);
+		}
+		html{scroll-behavior:smooth}
+		body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;overflow-x:hidden}
+
+		/* ── Nav ── */
+		nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:16px 32px;display:flex;align-items:center;justify-content:space-between;backdrop-filter:blur(20px);background:rgba(0,0,0,0.3);border-bottom:1px solid rgba(255,255,255,0.05)}
+		.nav-logo{font-size:20px;font-weight:800;background:linear-gradient(135deg,var(--primary),var(--secondary));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+		.nav-links{display:flex;gap:32px}
+		.nav-links a{color:var(--text);text-decoration:none;font-size:14px;font-weight:500;opacity:0.8;transition:opacity .2s}
+		.nav-links a:hover{opacity:1}
+		.nav-cta{padding:8px 20px;border-radius:9999px;background:var(--primary);color:#fff;text-decoration:none;font-size:14px;font-weight:600;transition:transform .2s,box-shadow .2s}
+		.nav-cta:hover{transform:translateY(-1px);box-shadow:0 8px 24px rgba(79,140,255,0.4)}
+
+		/* ── Hero ── */
+		#hero{min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:120px 24px 80px;position:relative;overflow:hidden}
+		#hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 30%, rgba(79,140,255,0.15) 0%, transparent 60%),radial-gradient(ellipse at 80% 80%, rgba(168,85,247,0.1) 0%, transparent 50%)}
+		.hero-badge{display:inline-block;padding:6px 16px;border-radius:9999px;background:rgba(79,140,255,0.1);border:1px solid rgba(79,140,255,0.3);color:var(--primary);font-size:13px;font-weight:600;margin-bottom:24px;animation:fadeUp .6s ease both}
+		.hero-title{font-size:clamp(40px,7vw,80px);font-weight:800;line-height:1.1;margin-bottom:20px;animation:fadeUp .6s .1s ease both}
+		.hero-title span{background:linear-gradient(135deg,var(--primary),var(--secondary));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+		.hero-tagline{font-size:clamp(16px,2vw,22px);opacity:0.7;margin-bottom:40px;max-width:600px;margin-left:auto;margin-right:auto;animation:fadeUp .6s .2s ease both}
+		.hero-cta{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;animation:fadeUp .6s .3s ease both}
+		.btn-primary{padding:14px 32px;border-radius:9999px;background:linear-gradient(135deg,var(--primary),var(--secondary));color:#fff;text-decoration:none;font-weight:700;font-size:16px;transition:transform .2s,box-shadow .2s;border:none;cursor:pointer}
+		.btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(79,140,255,0.4)}
+		.btn-secondary{padding:14px 32px;border-radius:9999px;background:transparent;color:var(--text);text-decoration:none;font-weight:600;font-size:16px;border:1px solid rgba(255,255,255,0.15);transition:all .2s}
+		.btn-secondary:hover{background:rgba(255,255,255,0.05)}
+
+		/* ── Sections ── */
+		section{padding:100px 24px}
+		.section-inner{max-width:1100px;margin:0 auto}
+		.section-label{font-size:13px;font-weight:600;color:var(--primary);letter-spacing:2px;text-transform:uppercase;margin-bottom:16px}
+		.section-title{font-size:clamp(28px,4vw,48px);font-weight:800;margin-bottom:20px;line-height:1.2}
+		.section-desc{font-size:17px;opacity:0.7;max-width:600px;line-height:1.8}
+
+		/* ── About ── */
+		#about{background:var(--card)}
+		.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;margin-top:48px}
+		@media(max-width:768px){.about-grid{grid-template-columns:1fr}}
+		.about-stats{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:32px}
+		.stat-card{padding:24px;border-radius:var(--radius);background:rgba(79,140,255,0.06);border:1px solid rgba(79,140,255,0.12);text-align:center}
+		.stat-num{font-size:36px;font-weight:800;color:var(--primary);display:block}
+		.stat-label{font-size:13px;opacity:0.6;margin-top:4px}
+		.about-visual{border-radius:24px;background:linear-gradient(135deg,rgba(79,140,255,0.15),rgba(168,85,247,0.1));padding:40px;text-align:center;font-size:80px}
+
+		/* ── Services ── */
+		#services .services-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;margin-top:48px}
+		.service-card{padding:32px;border-radius:var(--radius);background:var(--card);border:1px solid rgba(255,255,255,0.06);transition:transform .3s,border-color .3s,box-shadow .3s}
+		.service-card:hover{transform:translateY(-4px);border-color:rgba(79,140,255,0.3);box-shadow:0 20px 40px rgba(0,0,0,0.3)}
+		.service-icon{font-size:36px;margin-bottom:16px}
+		.service-card h3{font-size:18px;font-weight:700;margin-bottom:10px}
+		.service-card p{font-size:14px;opacity:0.7;line-height:1.7}
+
+		/* ── AI Chat Section ── */
+		#ai-chat{background:linear-gradient(135deg,rgba(79,140,255,0.08),rgba(168,85,247,0.05));border-top:1px solid rgba(79,140,255,0.1);border-bottom:1px solid rgba(79,140,255,0.1);text-align:center}
+		.ai-chat-inner{max-width:700px;margin:0 auto}
+		.ai-chat-icon{font-size:56px;margin-bottom:24px}
+		.ai-features{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin-top:32px}
+		.ai-feature{padding:8px 20px;border-radius:9999px;background:rgba(79,140,255,0.1);border:1px solid rgba(79,140,255,0.2);font-size:14px;color:var(--primary);font-weight:500}
+
+		/* ── Contact ── */
+		#contact{text-align:center}
+		.contact-info{margin-top:32px}
+		.contact-btn{display:inline-block;padding:16px 40px;border-radius:9999px;background:linear-gradient(135deg,var(--primary),var(--secondary));color:#fff;text-decoration:none;font-size:16px;font-weight:700;transition:transform .2s,box-shadow .2s}
+		.contact-btn:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(79,140,255,0.4)}
+
+		/* ── Footer ── */
+		footer{padding:40px 24px;text-align:center;border-top:1px solid rgba(255,255,255,0.06);opacity:0.5;font-size:13px}
+
+		/* ── Animations ── */
+		@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+
+		/* ── Mobile Nav ── */
+		@media(max-width:768px){
+			nav{padding:12px 20px}
+			.nav-links{display:none}
+			.hero-cta{flex-direction:column;align-items:center}
+		}
+	</style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav>
+	<div class="nav-logo">LeYu AI</div>
+	<div class="nav-links">
+		<a href="#about">關於我們</a>
+		<a href="#services">服務</a>
+		<a href="#ai-chat">AI 助理</a>
+		<a href="#contact">聯絡</a>
+	</div>
+	<a href="#contact" class="nav-cta">立即聯絡</a>
+</nav>
+
+<!-- Hero -->
+<section id="hero">
+	<div>
+		<div class="hero-badge">🚀 歡迎來到 LeYu AI</div>
+		<h1 class="hero-title"><span>LeYu AI</span></h1>
+		<p class="hero-tagline">由 AI 驅動，為未來而生</p>
+		<div class="hero-cta">
+			<a href="#services" class="btn-primary">探索服務</a>
+			<a href="#contact" class="btn-secondary">聯絡我們</a>
+		</div>
+	</div>
+</section>
+
+<!-- About -->
+<section id="about">
+	<div class="section-inner">
+		<div class="about-grid">
+			<div>
+				<div class="section-label">關於我們</div>
+				<h2 class="section-title">我們是誰</h2>
+				<p class="section-desc">LeYu AI 致力於提供最先進的 AI 解決方案，幫助企業提升效率、降低成本並創造新的商業價值。</p>
+				<div class="about-stats">
+					<div class="stat-card"><span class="stat-num">100%</span><div class="stat-label">客戶滿意度</div></div>
+					<div class="stat-card"><span class="stat-num">AI</span><div class="stat-label">驅動核心</div></div>
+					<div class="stat-card"><span class="stat-num">24/7</span><div class="stat-label">全天候支援</div></div>
+					<div class="stat-card"><span class="stat-num">∞</span><div class="stat-label">成長潛力</div></div>
+				</div>
+			</div>
+			<div class="about-visual">🤖</div>
+		</div>
+	</div>
+</section>
+
+<!-- Services -->
+<section id="services">
+	<div class="section-inner">
+		<div class="section-label">我們的服務</div>
+		<h2 class="section-title">全方位解決方案</h2>
+		<div class="services-grid">
+		<div class="service-card">
+			<div class="service-icon">⚡</div>
+			<h3>AI Agent Development</h3>
+			<p>專業的 AI Agent Development 解決方案，協助您的企業實現數位轉型與效率提升。</p>
+		</div>
+		<div class="service-card">
+			<div class="service-icon">🎯</div>
+			<h3>Enterprise Automation</h3>
+			<p>專業的 Enterprise Automation 解決方案，協助您的企業實現數位轉型與效率提升。</p>
+		</div>
+		<div class="service-card">
+			<div class="service-icon">🚀</div>
+			<h3>Smart Customer Service</h3>
+			<p>專業的 Smart Customer Service 解決方案，協助您的企業實現數位轉型與效率提升。</p>
+		</div>
+		</div>
+	</div>
+</section>
+
+<!-- AI Chat Section -->
+<section id="ai-chat">
+	<div class="section-inner ai-chat-inner">
+		<div class="ai-chat-icon">🤖</div>
+		<div class="section-label">AI 助理</div>
+		<h2 class="section-title">與我們的 AI 即時對話</h2>
+		<p class="section-desc" style="margin:0 auto">
+			點擊右下角的對話按鈕，立即與我們的 AI 助理開始對話。
+			無論是產品詢問、服務介紹或技術支援，AI 助理都能即時為您解答。
+		</p>
+		<div class="ai-features">
+			<span class="ai-feature">⚡ 即時回覆</span>
+			<span class="ai-feature">🧠 智慧理解</span>
+			<span class="ai-feature">📚 知識豐富</span>
+			<span class="ai-feature">🌐 24/7 在線</span>
+		</div>
+	</div>
+</section>
+
+<!-- Contact -->
+<section id="contact">
+	<div class="section-inner">
+		<div class="section-label">聯絡我們</div>
+		<h2 class="section-title">開始合作</h2>
+		<p class="section-desc" style="margin:0 auto">
+			準備好開始了嗎？立即聯絡我們，讓 AI 的力量助力您的業務成長。
+		</p>
+		
+	</div>
+</section>
+
+<!-- Footer -->
+<footer>
+	<p>© 2026 LeYu AI. All rights reserved. Powered by AI Agent Platform.</p>
+</footer>
+
+
+</body>
+</html>
